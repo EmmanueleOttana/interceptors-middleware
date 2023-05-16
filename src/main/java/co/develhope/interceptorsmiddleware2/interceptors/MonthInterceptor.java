@@ -1,6 +1,7 @@
 package co.develhope.interceptorsmiddleware2.interceptors;
 
 import co.develhope.interceptorsmiddleware2.entity.Month;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -36,7 +37,8 @@ public class MonthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String valuePath = request.getServletPath().substring(request.getServletPath().lastIndexOf("/")+1);
         if (valuePath == null || !valuePath.matches("^[0-9]*")) {
-            response.setStatus(404);
+            //response.sendError(HttpStatus.BAD_REQUEST.value());
+            response.setStatus(400);
             throw new IllegalArgumentException("Mese non esiste");
         } else return true;
     }
